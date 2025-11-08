@@ -93,7 +93,33 @@ function handleResultValidation() {
             cells[index].classList.add('winning-cell');
         });
 
-        //megjele
+        //megjeleniti a modalt (popup) a gyoztes uzenettel
+        showModal(winningMessage(currentPlayer));
+        return;
     }
 
+    //elenorzi a dontetlent
+    let roundDraw = !gameState.includes('');
+    if (roundDraw) {
+        gameActive = false;
+        statusDisplay.innerHTML = drawMessage;
+        //megjeleniti a modalt a dontetlen uzenettel
+        showModal(drawMessage);
+        return;
+    }
+
+    //valt a kovetkezo jatekosra 
+    handlePlayerChange();
+}
+
+//Vált a következő játékosra x o
+function handlePlayerChange() {
+    currentPlayer = currentPlayer = currentPlayer === 'X' ? 'O' : 'x';
+    statusDisplay.innerHTML = currentPlayerTurn(currentPlayer);
+}
+
+//visszaállítja a játékot kezdeti állapotba
+function handleRestartGame() {
+    gameActive = true;
+    currentPlayer
 }
