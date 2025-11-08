@@ -1,0 +1,83 @@
+// dom elemek lekerese
+const statusDisplay = document.getElementById('status');
+const cells = document.querySelectorAll('.cell');
+const resetButton = document.getElementById('reset-button');
+const modal = document.getElementById('modal');
+const modalMessage = document.getElementById('modal-message');
+const closeModalButton = document.getElementById('modal-close-button');
+
+//jatek allapota
+let gameActive = true;
+let currentPlayer = 'X';
+//A tábla 9 mezője, a tárolt értékek: '', 'X', vagy 'O'
+let gameState = ['', '', '', '', '', '', '', '', ''];
+
+// győzelmi kombinációk
+const winningCondition = [
+    [0, 1, 2],
+    [3, 4, 5],
+    [6, 7, 8],
+    [0, 3, 6],
+    [1, 4, 7],
+    [2, 5, 8],
+    [0, 4, 8],
+    [2, 4, 6],
+];
+
+//uzenet a jatekosoknak
+const winningMessage = (player) => `Játékos ${player} nyert!`;
+const drawMessage = `Döntetlen!`;
+const currentPlayerTurn = (player) => `Játékos ${player} következik`;
+
+//kezdeti allapot
+statusDisplay.innerHTML = currentPlayerTurn(currentPlayer);
+
+/** 
+ * Kezeli a cellára kattintás eseményét.
+ * @param {Event} clickedCellEvent - A kattintási esemény
+ */
+function handleCellClick(clickedCellEvent) {
+    const clickedCell = clickedCellEvent.target;
+    const clickedCellIndex = parseInt(clickedCell.getAttribute('data-cell-index'));
+
+    // Ellenőrzi, hogy a játék aktív-e, és hogy a cella már foglalt-e
+    if (gameState[clickedCellIndex] !== '' || !gameActive) {
+        return;
+    }
+
+    //a lepes feldolgozo funkció hívása
+    handleMove(clickedCell, clickedCellIndex);
+    //elenorzi a jatek kimenetelet
+    handleResultValidation();
+}
+
+/**
+ * Végrehajtja a lépést: frissíti a belső állapotot és a vizuális megjelenítést.*/
+function handleMove(clickedCell, clickedCellIndex) {
+    gameState[clickedCellIndex] = currentPlayer;
+    clickedCell.innerHTML = currentPlayer;
+    clickedCell.classList.add('filled', currentPlayer);
+}
+
+// Ellenőrzi a játék eredményét
+function handleResultValidation() {
+    let roundWon = false;
+    let winningCombo = [];
+
+    //vegig megy a nyero kombinacion
+    for (let i = 0; i < winningCondition.length; i++) {
+        const winCondition = winningConditions[i];
+        // lekeri a 3 cella erteket
+        let a = gameState[winCondition[0]];
+        let b = gameState[winCondition[1]];
+        let c = gameState[winCondition[2]];
+
+        //ha valamelyik ures akkor meg nincs nyertes ezen a vonalon
+        if (a === '' || b === '' || c === '') {
+            continue; 
+        }
+        //Ha a 3 ertek megeggyezik, van egy nyertes
+        if
+    }
+
+}
