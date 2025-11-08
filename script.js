@@ -121,5 +121,15 @@ function handlePlayerChange() {
 //visszaállítja a játékot kezdeti állapotba
 function handleRestartGame() {
     gameActive = true;
-    currentPlayer
+    currentPlayer = 'X';
+    gameState = ['', '', '', '', '', '', '', '', '',];ű
+    statusDisplay.innerHTML = currentPlayerTurn(currentPlayer);
+
+    //Vissza allitje az osszes cella vizuális allapotat
+    cells.forEach(cell => {
+        cell.innerHTML = '';
+        cell.classList.remove('filled', 'X', 'O', 'winning-cell');
+    });
+    hideModal();
 }
+
