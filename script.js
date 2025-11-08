@@ -80,8 +80,20 @@ function handleResultValidation() {
         if (a === b && b === c) {
             roundWon = true;
             winningCombo = winCondition;
-            break
+            break;
         }
+    }
+
+    if (roundWon) {
+        gameActive = false; // leallitjaajatekot
+        statusDisplay.innerHTML = winningMessage(currentPlayer);
+
+        //kiemelt a nyero vonalat
+        winningCombo.forEach(index => {
+            cells[index].classList.add('winning-cell');
+        });
+
+        //megjele
     }
 
 }
