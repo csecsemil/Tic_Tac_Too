@@ -3,50 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Do</title>
+    <title>Tic Tac Toe</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-<body class="main-app">
-    <div class="app-container">
-        <h1>Welcome to the Tic_Tac_Toe</h1>
+<body>
+    <div class="game-container">
+        <h1 class="app-title">Welcome to Tic Tac Toe</h1>
     
-
         <div id="status" class="status-display">
-        Game Start! 
+            Game Start! 
         </div>
 
-      <!-- Játéktábla Konténer -->
+        <!-- Játéktábla Konténer -->
         <div class="game-board">
-            <div class="cell" data-index="0"></div>
-            <div class="cell" data-index="1"></div>
-            <div class="cell" data-index="2"></div>
-            <div class="cell" data-index="3"></div>
-            <div class="cell" data-index="4"></div>
-            <div class="cell" data-index="5"></div>
-            <div class="cell" data-index="6"></div>
-            <div class="cell" data-index="7"></div>
-            <div class="cell" data-index="8"></div>
+            <div class="cell" data-cell-index="0"></div>
+            <div class="cell" data-cell-index="1"></div>
+            <div class="cell" data-cell-index="2"></div>
+            <div class="cell" data-cell-index="3"></div>
+            <div class="cell" data-cell-index="4"></div>
+            <div class="cell" data-cell-index="5"></div>
+            <div class="cell" data-cell-index="6"></div>
+            <div class="cell" data-cell-index="7"></div>
+            <div class="cell" data-cell-index="8"></div>
         </div>
 
         <!-- ujrainditas gomb -->
         <button id="reset-button" class="reset-btn">
             Restart
         </button>
-
     </div>
 
-    <!-- Modal Konténer az pl Gyözelem! -->
-     <div id="modal" class="modal-overlay hidden">
+    <!-- Modal Konténer -->
+    <div id="modal" class="modal-overlay hidden">
         <div class="modal-content">
             <p id="modal-message"></p>
             <button id="modal-close-button" class="modal-btn">
                 OK
             </button>
-
         </div>
-     </div>
+    </div>
 
-
-
-    
+    <script src="script.js"></script>
 </body>
 </html>

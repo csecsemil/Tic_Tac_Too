@@ -69,7 +69,7 @@ function handleResultValidation() {
 
     //vegig megy a nyero kombinacion
     for (let i = 0; i < winningCondition.length; i++) {
-        const winCondition = winningConditions[i];
+        const winCondition = winningCondition[i]; 
         // lekeri a 3 cella erteket
         let a = gameState[winCondition[0]];
         let b = gameState[winCondition[1]];
@@ -125,7 +125,7 @@ function handlePlayerChange() {
 function handleRestartGame() {
     gameActive = true;
     currentPlayer = 'X';
-    gameState = ['', '', '', '', '', '', '', '', '',];ű
+    gameState = ['', '', '', '', '', '', '', '', '']; 
     statusDisplay.innerHTML = currentPlayerTurn(currentPlayer);
 
     //Vissza allitje az osszes cella vizuális allapotat
@@ -159,5 +159,4 @@ cells.forEach(cell => cell.addEventListener('click', handleCellClick));
 resetButton.addEventListener('click', handleRestartGame);
 
 //modal bezaro gomb
-modalCloseButton.addEventListener('click', handleRestartGame);
-
+closeModalButton.addEventListener('click', handleRestartGame); 

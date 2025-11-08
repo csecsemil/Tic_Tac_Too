@@ -21,7 +21,7 @@ body {
 
 /*Heading*/
 .app-title {
-    font-size: 1.25rem;
+    font-size: 2.25rem;
     font-weight: 700;
     text-align: center;
     color: #2d3748;
@@ -31,7 +31,7 @@ body {
 
 /* Status D*/
 .status-display {
-    font-size: 1.25rem; 
+    font-size: 1.5rem; 
     font-weight: 600;
     text-align: center;
     margin-bottom: 1.5rem;
@@ -44,5 +44,47 @@ body {
     margin-top: 2rem;
     width: 100%;
     background-color: #2563eb;
-    color:#eb2525; 
+    color: white;
+    font-weight: 700;
+    padding: 0.75rem 1rem;
+    border-radius: 0.75rem;
+    transition: all 0.3s ease-in-out;
+    border: none;
+    cursor: pointer;
+}
+.reset-btn:hover {
+    background-color: #1d4ed8;
+    transform: scale(1.01);
+}
+
+
+/*message*/
+#modal-message {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    color: #1a202c;
+}
+
+/*modal zarogomb*/
+.modal-btn {
+    background-color:  #48bb78;
+    color: white;
+    font-weight: 700;
+    padding: 0.5rem 1.5rem;
+    border-radius: 0.5rem;
+    transition: background-color 0.3s;
+    border: none;
+    cursor: pointer;
+}
+
+
+/*jatektabla*/
+.game-board {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    width: 300px;
+    height: 300px;
+    margin: 0 auto;
 }
