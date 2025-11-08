@@ -77,8 +77,11 @@ body {
     border: none;
     cursor: pointer;
 }
+.modal-btn:hover {
+    background-color: #38a169;
+}
 
-
+/************************************/
 /*jatektabla*/
 .game-board {
     display: grid;
@@ -87,4 +90,32 @@ body {
     width: 300px;
     height: 300px;
     margin: 0 auto;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    overflow: hidden;
+}
+.cell {
+    display: flex;
+    justify-content: center;
+    align-items: 3.5rem;
+    font-weight: 700;
+    cursor: pointer;
+    border: 2px solid #cbd5e0;
+    transition: background-color 0.2s, transform 0.1s;
+    user-select: none;
+    color: #1a202c;
+}
+/*A cellák szegélyeinek eltüntetése a széleken*/
+.cell:nth-child(3n) {border-right: none; }
+.cell:nth-child(3n + 1) {border-left: none; }
+.cell:nth-child(-n + 3) {border-top: none; }
+.cell:nth-child(n + 7) {border-bottom: none; }
+
+.cell:not(.filled):hover {
+    background-color: #f0f4f8;
+}
+
+.winning-cell {
+    background-color: #68d391 !important;
+    color: white !important;
 }

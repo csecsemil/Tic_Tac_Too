@@ -74,6 +74,9 @@ function handleResultValidation() {
         let a = gameState[winCondition[0]];
         let b = gameState[winCondition[1]];
         let c = gameState[winCondition[2]];
+        
+        
+        
 
         //ha valamelyik ures akkor meg nincs nyertes ezen a vonalon
         if (a === '' || b === '' || c === '') {
