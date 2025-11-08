@@ -133,3 +133,25 @@ function handleRestartGame() {
     hideModal();
 }
 
+//Megjeleniti az az uzenet doboz modal
+function showModal(message) {
+    modalMessage.innerHTML = message;
+    modal.classList.remove('hidden');
+}
+
+//elrejti az uzenet doboz modalt
+function hideModal() {
+    modal.classList.add('hidden')
+}
+
+//esemenyfigyelok
+
+//hozza adja a katt figyelot minden cellára
+cells.forEach(cell => cell.addEventListener('click', handleCellClick));
+
+//ujrainditas gomb figyelo
+resetButton.addEventListener('click', handleRestartGame);
+
+//modal bezaro gomb
+modalCloseButton.addEventListener('click', handleRestartGame);
+
