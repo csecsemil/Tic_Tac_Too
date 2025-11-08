@@ -77,7 +77,11 @@ function handleResultValidation() {
             continue; 
         }
         //Ha a 3 ertek megeggyezik, van egy nyertes
-        if
+        if (a === b && b === c) {
+            roundWon = true;
+            winningCombo = winCondition;
+            break
+        }
     }
 
 }
