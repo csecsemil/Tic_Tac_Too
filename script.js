@@ -52,7 +52,10 @@ function handleCellClick(clickedCellEvent) {
 }
 
 /**
- * Végrehajtja a lépést: frissíti a belső állapotot és a vizuális megjelenítést.*/
+* Végrehajtja a lépést: frissíti a belső állapotot és a vizuális megjelenítést.
+* @param {HTMLElement} clickedCell - A kattintott DOM elem
+* @param {number} clickedCellIndex - A kattintott cella indexe
+*/
 function handleMove(clickedCell, clickedCellIndex) {
     gameState[clickedCellIndex] = currentPlayer;
     clickedCell.innerHTML = currentPlayer;
@@ -133,7 +136,10 @@ function handleRestartGame() {
     hideModal();
 }
 
-//Megjeleniti az az uzenet doboz modal
+/**
+* Megjeleníti az üzenetdobozt (modal).
+* @param {string} message - A modálban megjelenítendő üzenet
+*/
 function showModal(message) {
     modalMessage.innerHTML = message;
     modal.classList.remove('hidden');
