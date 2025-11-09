@@ -133,55 +133,128 @@ function checkWin() {
             }
         }
 
+        //3. atlo kombinaciok vizsgalata (Jobb felülről le)
+        for (let row = 0; row <= N - K; row++) {
+            for (let col = 0; col <= N - K; col++) {
+                let combo = [];
+                let isWin = true;
+                for (let k = 0; k < K; k++) {
+                    const index = (row + k) * N + (col + k);//mindkettő növekszik
+                    if (gameState[index] !== player) {
+                        isWin = false;
+                        break;
+                    }
+                    combo.push(index);
+                }
+                if (isWin) return { winner: player, combo };
+            }
+        }
         //4. atlo kombinaciok vizsgalata (Jobb felülről le)
-        for (let row = 0; row <= N - K; row)
+        for (let row = 0; row <= N - K; row++) {
+            for (let col = K - 1; col < N; col++) {
+                let combo = [];
+                let isWin = true;
+                for (let k = 0; k < K; k++) {
+                    const index = (row + k) * N + (col - k);//sor növekszik, oszlop csökken
+                    if (gameState[index] !== player) {
+                        isWin = false;
+                        break;
+                    }
+                    combo.push(index);
+                }
+                if (isWin) return { winner: player, combo};
+            }
+        }
     }
+    return { winner: null, combo: [] };//nincs nyertes
 }
 
 
+//ertekeli a jatek eredmenyet
+function handleResultValidation() {
+    const result = checkWin();//ellenorzi, van e nyertes
 
-//Vált a következő játékosra x o
-function handlePlayerChange() {
-    currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
-    statusDisplay.innerHTML = currentPlayerTurn(currentPlayer);
+    if (result.winner) {
+        gameActive = false; //leallitja a jatekot
+        const winnerMessage = winningMessage(result.winner);
+        statusDisplay.innerHTML = winnerMessage; //kiirja az eredmenyt
+
+        //kiemeli a nyero vonalat
+        result.combo.forEach(index => {
+            document.querySelector(`.cell[data-index="${index}"]`).classList.add('winning-cell');
+        });
+
+        showModal(winnerMessage);//megjeleniti a modalt
+        return;
+    }
+
+    //dontetlen ellenorzes, ha minden cella tele van es nincs nyertes
+    let roundDraw = !gameState.includes(''); //ha nincs ures cella
+    if (roundDraw) {
+        gameActive = false; //leallitja a jatekot
+        statusDisplay.innerHTML = drawMessage; //kiirja az eredmenyt
+        showModal(drawMessage);//megjeleniti a modalt
+        return;
+    }
+
+    handlePlayerChange(); // ha nincs vege a jateknak, valt a jatekos
 }
+
+
 
 //visszaállítja a játékot kezdeti állapotba
 function handleRestartGame() {
     gameActive = true;
     currentPlayer = 'X';
-    gameState = ['', '', '', '', '', '', '', '', '']; 
-    statusDisplay.innerHTML = currentPlayerTurn(currentPlayer);
 
-    //Vissza allitje az osszes cella vizuális allapotat
-    cells.forEach(cell => {
-        cell.innerHTML = '';
-        cell.classList.remove('filled', 'X', 'O', 'winning-cell');
-    });
-    hideModal();
+    createBoard();//uj jatektabla letrehozasa
+    
+    statusDisplay.innerHTML = currentPlayerTurn(currentPlayer);//frissiti a statuszt
+    hideModal();//elrejti a modalt
 }
 
-/**
-* Megjeleníti az üzenetdobozt (modal).
-* @param {string} message - A modálban megjelenítendő üzenet
-*/
+//valt a jatekmodok kozott
+function changeGameMode(newMode) {
+    if (gameMode !== newMode) {//cak akkorcsinal valamit ha valtozik a mod
+        gameMode = newMode;
+        boardSize = newMode === '2P' ? 3 : 5; //beallitja a tabla meretet
+
+        //frissiti a gombok allapotat
+        mode2pButton.classList.remove('active');
+        mode3pButton.classList.remove('active');
+        if (newMode === '2P') {
+            mode2pButton.classList.add('active');
+        } else {
+            mode3pButton.classList.add('active');
+        }
+
+        handleRestartGame(); //ujrainditja a jatekot uj modban
+
+        statusDisplay.innerHTML = `${boardSize}x${boardSize} mód aktív. Játékos X kezd.`;
+
+    }
+}
+
+//modal megjelenitese
 function showModal(message) {
     modalMessage.innerHTML = message;
-    modal.classList.remove('hidden');
+    MediaSourceHandle.classList.remove('hidden');// eltavolitja a hidden osztalyt
 }
 
-//elrejti az uzenet doboz modalt
+//modal elrejtese
 function hideModal() {
-    modal.classList.add('hidden')
+    modal.classList.add('hidden');//hozzaadja a hidden osztalyt
 }
 
-//esemenyfigyelok
+//esemenyfigyelok hozzaadasa
+resetButton.addEventListener('click', handleRestartGame);//reset gomb
+modalCloseButton.addEventListener('click', handleRestartGame);//modal gomb
 
-//hozza adja a katt figyelot minden cellára
-cells.forEach(cell => cell.addEventListener('click', handleCellClick));
+mode2pButton.addEventListener('click', () => changeGameMode('2P')); //2 jatekos mod gomb
+mode3pButton.addEventListener('click', () => changeGameMode('3P')); //3 jatekos mod gomb
 
-//ujrainditas gomb figyelo
-resetButton.addEventListener('click', handleRestartGame);
+//kezdeti tabla letrehozasa
+window.onload = () => {
+    changeGameMode('2P'); //alapertelmezett mod 2 jatekos
+}
 
-//modal bezaro gomb
-closeModalButton.addEventListener('click', handleRestartGame); 

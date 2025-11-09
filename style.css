@@ -68,37 +68,35 @@ body {
 
 /*modal zarogomb*/
 .modal-btn {
-    background-color:  #48bb78;
-    color: white;
-    font-weight: 700;
-    padding: 0.5rem 1.5rem;
-    border-radius: 0.5rem;
-    transition: background-color 0.3s;
+    flex-grow: 1;/*Egyenletesen tölti ki a rendelkezésre álló helyet*/
+    padding: 0.5rem 1rem;
+    font-weight: 600;/*felkover*/
+    background-color: transparent;
     border: none;
     cursor: pointer;
+    transition: all 0.2s;
 }
-.modal-btn:hover {
-    background-color: #38a169;
+.mode-btn.active {
+    background-color: white;
+    color: #2d3748;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/************************************/
 /*jatektabla*/
 .game-board {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(3, 1fr);
-    width: 300px;
-    height: 300px;
+    width: 350px;
+    height: 350px;
     margin: 0 auto;
     box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
     border-radius: 12px;
     overflow: hidden;
+    display: grid;
 }
+
 .cell {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 3.5rem;
     font-weight: 700;
     cursor: pointer;
     border: 2px solid #cbd5e0;
@@ -106,11 +104,9 @@ body {
     user-select: none;
     color: #1a202c;
 }
-/*A cellák szegélyeinek eltüntetése a széleken*/
-.cell:nth-child(3n) {border-right: none; }
-.cell:nth-child(3n + 1) {border-left: none; }
-.cell:nth-child(-n + 3) {border-top: none; }
-.cell:nth-child(n + 7) {border-bottom: none; }
+
+.board-3x3 .cell { font-size: 3.5rem; }
+.board-5x5 .cell {font-size: 2rem; }
 
 .cell:not(.filled):hover {
     background-color: #f0f4f8;
@@ -123,6 +119,7 @@ body {
 
 .cell.X { color: #e53e3e; }
 .cell.O { color: #3182ce; }
+.cell.Z { color: #f6ad55; }
 
 
 /*madawl stilusok*/
