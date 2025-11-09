@@ -22,9 +22,9 @@ const winConditionLength = 3; //Hany szimbólum kell a győzelemhez
 //uzenet a jatekosoknak
 const players2P = ['X', 'O'];
 const players3P = ['X', 'O', 'Z'];
-const winningMessage = (player) => `Játékos ${player} nyert!`;
-const drawMessage = `Döntetlen!`;
-const currentPlayerTurn = (player) => `Játékos ${player} következik`;
+const winningMessage = (player) => `Player ${player} won!`;
+const drawMessage = `Draw!`;
+const currentPlayerTurn = (player) => `Pleyer ${player} 's turn`;
 
 
 
