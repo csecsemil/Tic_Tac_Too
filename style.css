@@ -72,7 +72,7 @@ body {
     border-radius: 0.75rem;
     padding: 0.25rem;
     margin-bottom: 1.5rem;
-    gap: 0.25rem; //gombok kozotti tavolsag
+    gap: 0.25rem; /*gombok kozotti tavolsag*/
 }
 
 /*modal zarogomb*/
@@ -166,10 +166,3 @@ body {
 .hidden {
     display: none !important;
 }
-
-/* JavaScript was removed from the CSS file and should be placed in a .js file, for example:
-   // script.js
-   // const clickedCellIndex = parseInt(clickedCell.getAttribute('data-cell-index'));
-   // cell.setAttribute('data-index', i);
-*/
-
