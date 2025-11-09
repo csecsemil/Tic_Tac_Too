@@ -1,6 +1,6 @@
 body {
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-    background-color: #f7fafc;
+    background-color: #cff7da;
 
     display: flex;
     flex-direction: column;
@@ -14,9 +14,9 @@ body {
     max-width: 448px; 
     width: 100%;
     padding: 1.5rem;
-    background-color: white;
+    background-color: rgba(158, 228, 161, 0.459);
     border-radius: 0.75rem;
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 10px 20px -5px rgba(4, 120, 87, 0.342), 0 4px 6px -2px rgba(4, 120, 87, 0.322);
 }
 
 /*Heading*/
@@ -24,7 +24,7 @@ body {
     font-size: 2.25rem;
     font-weight: 700;
     text-align: center;
-    color: #2d3748;
+    color: #05533c;
     margin-bottom: 1.5rem;
     letter-spacing: 0.25em;
 }
@@ -36,14 +36,14 @@ body {
     text-align: center;
     margin-bottom: 1.5rem;
     height: 2rem;
-    color: #4a5568;
+    color: #059669;
 }
 
 /*resetgomb*/
 .reset-btn {
     margin-top: 2rem;
     width: 100%;
-    background-color: #2563eb;
+    background-color: #047857;
     color: white;
     font-weight: 700;
     padding: 0.75rem 1rem;
@@ -53,7 +53,7 @@ body {
     cursor: pointer;
 }
 .reset-btn:hover {
-    background-color: #1d4ed8;
+    background-color: #065f46;
     transform: scale(1.01);
 }
 
@@ -63,12 +63,12 @@ body {
     font-size: 1.5rem;
     font-weight: 700;
     margin-bottom: 1.5rem;
-    color: #1a202c;
+    color: #064e3b;
 }
 
 .mode-selector {
     display: flex;
-    background-color: #f7fafc;
+    background-color: #2b5f3a;
     border-radius: 0.75rem;
     padding: 0.25rem;
     margin-bottom: 1.5rem;
@@ -80,15 +80,15 @@ body {
     flex-grow: 1;/*Egyenletesen tölti ki a rendelkezésre álló helyet*/
     padding: 0.5rem 1rem;
     font-weight: 600;/*felkover*/
-    background-color: transparent;
+    background-color: #10b981;
     border: none;
     cursor: pointer;
     transition: all 0.2s;
     color: #4a5568;
 }
 .mode-btn.active {
-    background-color: white;
-    color: #2d3748;
+    background-color: rgb(118, 235, 118);
+    color: #000000;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
@@ -111,7 +111,7 @@ body {
     align-items: center;
     font-weight: 700;
     cursor: pointer;
-    border: 2px solid #cbd5e0;
+    border: 2px solid #1ba851;
     transition: background-color 0.2s, transform 0.1s;
     user-select: none;
     color: #1a202c;
@@ -129,9 +129,9 @@ body {
     color: white !important;
 }
 
-.cell.X { color: #e53e3e; }
-.cell.O { color: #3182ce; }
-.cell.Z { color: #f6ad55; }
+.cell.X { color: #3b793f; }
+.cell.O { color: #109965fb; }
+.cell.Z { color: #925e1f; }
 
 
 /*madawl stilusok*/
