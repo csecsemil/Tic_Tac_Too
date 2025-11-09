@@ -1,6 +1,6 @@
 // dom elemek lekerese
 const statusDisplay = document.getElementById('status');
-const cells = document.querySelectorAll('.cell');
+const gameBoard = document.getElementById('game-board'); // HOZZÁADVA
 const resetButton = document.getElementById('reset-button');
 const modal = document.getElementById('modal');
 const modalMessage = document.getElementById('modal-message');
@@ -74,7 +74,7 @@ function handlePlayerChange() {
  */
 function handleCellClick(clickedCellEvent) {
     const clickedCell = clickedCellEvent.target;
-    const clickedCellIndex = parseInt(clickedCell.getAttribute('data-cell-index'));
+    const clickedCellIndex = parseInt(clickedCell.getAttribute('data-index')); // kiszámítja a kattintott cella indexét
 
     // Ha a cella már ki van töltve vagy a játék inaktív, akkor semmit sem csinál
     if (gameState[clickedCellIndex] !== '' || !gameActive) {
@@ -84,9 +84,9 @@ function handleCellClick(clickedCellEvent) {
     //a lepes vegrehajtasa
     gameState[clickedCellIndex] = currentPlayer;
     clickedCell.innerHTML = currentPlayer;
-    clickedCell.classList.add('filled', currentPlayer);//hozzáadja a jelet (pl. 'X' vagy 'O') osztályként is
+    clickedCell.classList.add('filled', currentPlayer);//hozzaadja a stilusokat
 
-    handleResultValidation();//ellenorzi a jatek eredmenyet a lepes utan
+    handleResultValidation();//ertekeli a jatek eredmenyet
 }
 
 //Ellenorzi a jatek eredmenyet
@@ -207,10 +207,10 @@ function handleRestartGame() {
     gameActive = true;
     currentPlayer = 'X';
 
-    createBoard();//uj jatektabla letrehozasa
+    createGameBoard(); // JAVÍTVA: createBoard helyett
     
-    statusDisplay.innerHTML = currentPlayerTurn(currentPlayer);//frissiti a statuszt
-    hideModal();//elrejti a modalt
+    statusDisplay.innerHTML = currentPlayerTurn(currentPlayer);
+    hideModal();
 }
 
 //valt a jatekmodok kozott
@@ -238,7 +238,7 @@ function changeGameMode(newMode) {
 //modal megjelenitese
 function showModal(message) {
     modalMessage.innerHTML = message;
-    MediaSourceHandle.classList.remove('hidden');// eltavolitja a hidden osztalyt
+    modal.classList.remove('hidden'); // JAVÍTVA: MediaSourceHandle helyett
 }
 
 //modal elrejtese
@@ -247,8 +247,8 @@ function hideModal() {
 }
 
 //esemenyfigyelok hozzaadasa
-resetButton.addEventListener('click', handleRestartGame);//reset gomb
-modalCloseButton.addEventListener('click', handleRestartGame);//modal gomb
+resetButton.addEventListener('click', handleRestartGame);
+closeModalButton.addEventListener('click', handleRestartGame); //modal bezarasa es jatek ujrainditasa
 
 mode2pButton.addEventListener('click', () => changeGameMode('2P')); //2 jatekos mod gomb
 mode3pButton.addEventListener('click', () => changeGameMode('3P')); //3 jatekos mod gomb

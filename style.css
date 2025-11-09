@@ -12,7 +12,7 @@ body {
 
 .game-container {
     max-width: 448px; 
-    width: 110%;
+    width: 100%;
     padding: 1.5rem;
     background-color: white;
     border-radius: 0.75rem;
@@ -66,6 +66,15 @@ body {
     color: #1a202c;
 }
 
+.mode-selector {
+    display: flex;
+    background-color: #f7fafc;
+    border-radius: 0.75rem;
+    padding: 0.25rem;
+    margin-bottom: 1.5rem;
+    gap: 0.25rem; //gombok kozotti tavolsag
+}
+
 /*modal zarogomb*/
 .modal-btn {
     flex-grow: 1;/*Egyenletesen tölti ki a rendelkezésre álló helyet*/
@@ -75,6 +84,7 @@ body {
     border: none;
     cursor: pointer;
     transition: all 0.2s;
+    color: #4a5568;
 }
 .mode-btn.active {
     background-color: white;
@@ -91,6 +101,8 @@ body {
     border-radius: 12px;
     overflow: hidden;
     display: grid;
+    grid-template-columns: repeat(3, 1fr); /*alapertelmezett 3x3*/
+    grid-template-rows: repeat(3, 1fr);    
 }
 
 .cell {
@@ -154,4 +166,10 @@ body {
 .hidden {
     display: none !important;
 }
+
+/* JavaScript was removed from the CSS file and should be placed in a .js file, for example:
+   // script.js
+   // const clickedCellIndex = parseInt(clickedCell.getAttribute('data-cell-index'));
+   // cell.setAttribute('data-index', i);
+*/
 
