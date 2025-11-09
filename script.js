@@ -5,36 +5,68 @@ const resetButton = document.getElementById('reset-button');
 const modal = document.getElementById('modal');
 const modalMessage = document.getElementById('modal-message');
 const closeModalButton = document.getElementById('modal-close-button');
+const mode2pButton = document.getElementById('mode-2p');
+const mode3pButton = document.getElementById('mode-3p');
+
 
 //jatek allapota
 let gameActive = true;
 let currentPlayer = 'X';
 //A tábla 9 mezője, a tárolt értékek: '', 'X', vagy 'O'
 let gameState = ['', '', '', '', '', '', '', '', ''];
+let gameMode = '2P';
+let boardSize = 3;
 
-// győzelmi kombinációk
-const winningCondition = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6],
-];
 
 //uzenet a jatekosoknak
+const players2P = ['X', 'O'];
+const players3P = ['X', 'O', 'Z'];
 const winningMessage = (player) => `Játékos ${player} nyert!`;
 const drawMessage = `Döntetlen!`;
 const currentPlayerTurn = (player) => `Játékos ${player} következik`;
 
-//kezdeti allapot
-statusDisplay.innerHTML = currentPlayerTurn(currentPlayer);
+
+
+/**
+* Létrehozza a játéktáblát (5x5 vagy 3x3)
+*/
+function createGameBoard() {
+    gameBoard.innerHTML = '';
+
+    //beallitja a grid meretet
+    gameBoard.style.gridTemplateColumns = `repeat(${boardSize}, 1fr)`;
+    gameBoard.style.gridTemplateRows = `repeat(${boardSize}, 1fr)`;
+
+    gameBoard.classList.remove('board-3x3', 'board-5x5');
+    gameBoard.classList.add(`board-${boardSize}x${boardSize}`);
+
+    const totalCells = boardSize * boardSize;
+    gameState = Array(totalCells).fill('');
+
+    //letrehozza a cellakat
+    for (let i = 0; i < totalCells; i++) {
+        const cell = document.createElement('div');
+        cell.classList.add('cell');
+        cell.setAttribute('data-index', i);
+        cell.addEventListener('click', handleCellClick);
+        gameBoard.appendChild(cell);
+    }
+}
+
+/*valt a kovetkezo jatekosra a jelenlegi modban*/
+function handlePlayerChange() {
+    const currentPlayers = gameMode === '2P' ? players2P : players3P;
+    const currentIndex = currentPlayers.indexOf(currentPlayer);
+
+    const nextIndex = (currentIndex + 1) % currentPlayers.length;
+    currentPlayer = currentPlayers[nextIndex];
+
+    statusDisplay.innerHTML = currentPlayerTurn(currentPlayer);
+}
+
 
 /** 
  * Kezeli a cellára kattintás eseményét.
- * @param {Event} clickedCellEvent - A kattintási esemény
  */
 function handleCellClick(clickedCellEvent) {
     const clickedCell = clickedCellEvent.target;
@@ -45,9 +77,11 @@ function handleCellClick(clickedCellEvent) {
         return;
     }
 
-    //a lepes feldolgozo funkció hívása
-    handleMove(clickedCell, clickedCellIndex);
-    //elenorzi a jatek kimenetelet
+    //a lepes vegrehajtasa
+    gameState[clickedCellIndex] = currentPlayer;
+    clickedCell.innerHTML = currentPlayer;
+    clickedCell.classList.add('filled', currentPlayer);
+
     handleResultValidation();
 }
 
@@ -74,7 +108,7 @@ function handleResultValidation() {
         let a = gameState[winCondition[0]];
         let b = gameState[winCondition[1]];
         let c = gameState[winCondition[2]];
-        
+
         
         
 
@@ -120,7 +154,7 @@ function handleResultValidation() {
 
 //Vált a következő játékosra x o
 function handlePlayerChange() {
-    currentPlayer = currentPlayer = currentPlayer === 'X' ? 'O' : 'x';
+    currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
     statusDisplay.innerHTML = currentPlayerTurn(currentPlayer);
 }
 

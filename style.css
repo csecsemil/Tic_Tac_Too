@@ -97,7 +97,8 @@ body {
 .cell {
     display: flex;
     justify-content: center;
-    align-items: 3.5rem;
+    align-items: center;
+    font-size: 3.5rem;
     font-weight: 700;
     cursor: pointer;
     border: 2px solid #cbd5e0;
@@ -116,6 +117,44 @@ body {
 }
 
 .winning-cell {
-    background-color: #68d391 !important;
+    background-color: #38a169 !important;
     color: white !important;
 }
+
+.cell.X { color: #e53e3e; }
+.cell.O { color: #3182ce; }
+
+
+/*madawl stilusok*/
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+.modal-content {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    animation: fadeIn 0.3s ease-out;
+    max-width: 90%;
+    width: 350px;
+}
+
+@keyframes fadeIn {
+    from {opacity: 0; transform: translateY(-20px); } 
+    to {opacity: 1; transform: translateY(0);}
+}
+
+.hidden {
+    display: none !important;
+}
+
