@@ -13,9 +13,10 @@ const mode3pButton = document.getElementById('mode-3p');
 let gameActive = true;
 let currentPlayer = 'X';
 //A tábla 9 mezője, a tárolt értékek: '', 'X', vagy 'O'
-let gameState = ['', '', '', '', '', '', '', '', ''];
-let gameMode = '2P';
-let boardSize = 3;
+let gameState = [];//jatek allapota tomb
+let gameMode = '2P'; //Aktualis jatek mod (2 jatekos vagy 3 jatekos)
+let boardSize = 3;//tabla merete
+const winConditionLength = 3; //Hany szimbólum kell a győzelemhez
 
 
 //uzenet a jatekosoknak
@@ -37,6 +38,7 @@ function createGameBoard() {
     gameBoard.style.gridTemplateColumns = `repeat(${boardSize}, 1fr)`;
     gameBoard.style.gridTemplateRows = `repeat(${boardSize}, 1fr)`;
 
+    //
     gameBoard.classList.remove('board-3x3', 'board-5x5');
     gameBoard.classList.add(`board-${boardSize}x${boardSize}`);
 
@@ -46,22 +48,24 @@ function createGameBoard() {
     //letrehozza a cellakat
     for (let i = 0; i < totalCells; i++) {
         const cell = document.createElement('div');
-        cell.classList.add('cell');
-        cell.setAttribute('data-index', i);
-        cell.addEventListener('click', handleCellClick);
-        gameBoard.appendChild(cell);
+        cell.classList.add('cell'); //hozzaadja a cella stilusat
+        cell.setAttribute('data-index', i); //elmenti az indexet a cellan
+        cell.addEventListener('click', handleCellClick);//esemenyfigyelo hozzaadasa
+        gameBoard.appendChild(cell);//hozzaadja a jatektablahoz a cellat
     }
 }
 
 /*valt a kovetkezo jatekosra a jelenlegi modban*/
 function handlePlayerChange() {
+    //megkeresi a megfelelo jatekos listat
     const currentPlayers = gameMode === '2P' ? players2P : players3P;
-    const currentIndex = currentPlayers.indexOf(currentPlayer);
+    const currentIndex = currentPlayers.indexOf(currentPlayer);//aktualis jatekos indexe
 
+    //kiszamitja a kovetkezo jatekos indexet (korberforgoan: 0, 1, 2, 0, ...)
     const nextIndex = (currentIndex + 1) % currentPlayers.length;
-    currentPlayer = currentPlayers[nextIndex];
+    currentPlayer = currentPlayers[nextIndex];//beallitja a kovetkezo jatekost
 
-    statusDisplay.innerHTML = currentPlayerTurn(currentPlayer);
+    statusDisplay.innerHTML = currentPlayerTurn(currentPlayer);//frissiti a statusz kijelzot
 }
 
 
@@ -72,7 +76,7 @@ function handleCellClick(clickedCellEvent) {
     const clickedCell = clickedCellEvent.target;
     const clickedCellIndex = parseInt(clickedCell.getAttribute('data-cell-index'));
 
-    // Ellenőrzi, hogy a játék aktív-e, és hogy a cella már foglalt-e
+    // Ha a cella már ki van töltve vagy a játék inaktív, akkor semmit sem csinál
     if (gameState[clickedCellIndex] !== '' || !gameActive) {
         return;
     }
@@ -80,77 +84,61 @@ function handleCellClick(clickedCellEvent) {
     //a lepes vegrehajtasa
     gameState[clickedCellIndex] = currentPlayer;
     clickedCell.innerHTML = currentPlayer;
-    clickedCell.classList.add('filled', currentPlayer);
+    clickedCell.classList.add('filled', currentPlayer);//hozzáadja a jelet (pl. 'X' vagy 'O') osztályként is
 
-    handleResultValidation();
+    handleResultValidation();//ellenorzi a jatek eredmenyet a lepes utan
 }
 
-/**
-* Végrehajtja a lépést: frissíti a belső állapotot és a vizuális megjelenítést.
-* @param {HTMLElement} clickedCell - A kattintott DOM elem
-* @param {number} clickedCellIndex - A kattintott cella indexe
-*/
-function handleMove(clickedCell, clickedCellIndex) {
-    gameState[clickedCellIndex] = currentPlayer;
-    clickedCell.innerHTML = currentPlayer;
-    clickedCell.classList.add('filled', currentPlayer);
-}
+//Ellenorzi a jatek eredmenyet
+function checkWin() {
+    const N = boardSize;// 3 (2P-hez) vagy 5 (3P-hez)
+    const K = winConditionLength; // Mindig 3
+    const currentPlayers = gameMode === '2P' ? players2P : players3P
 
-// Ellenőrzi a játék eredményét
-function handleResultValidation() {
-    let roundWon = false;
-    let winningCombo = [];
+    //vegigmegy minden jatekoson
+    for (const player of currentPlayers) {
+        // Vizsgálja a sorokat
 
-    //vegig megy a nyero kombinacion
-    for (let i = 0; i < winningCondition.length; i++) {
-        const winCondition = winningCondition[i]; 
-        // lekeri a 3 cella erteket
-        let a = gameState[winCondition[0]];
-        let b = gameState[winCondition[1]];
-        let c = gameState[winCondition[2]];
-
-        
-        
-
-        //ha valamelyik ures akkor meg nincs nyertes ezen a vonalon
-        if (a === '' || b === '' || c === '') {
-            continue; 
+        // Vizsgálja az vízszintes kombinációkat
+        for (let row = 0; row < N; row++) { // minden sor vegig
+            for (let col = 0; col <= N - K; col++) {// minden oszlop vegig ahol elfer a kombinacio
+                let combo = [];//
+                let isWin = true;
+                for (let k = 0; k < K; k++) {//vegig megy a K hosszusagon
+                    const index = row * N + (col + k);//kiszamitja az indexet
+                    if (gameState[index] !== player) {//ha nem egyezik a jatekos jelevel
+                        isWin = false;//nem nyert
+                        break;
+                    }
+                    combo.push(index);//hozzaadja a kombinaciohoz az indexet
+                }
+                if (isWin) return { winner: player, combo };//ha nyert visszater az eredmennyel
+            }
         }
-        //Ha a 3 ertek megeggyezik, van egy nyertes
-        if (a === b && b === c) {
-            roundWon = true;
-            winningCombo = winCondition;
-            break;
+
+        //2. fuggoleges kombinaciok vizsgalata
+        for (let col = 0; col < N; col++) {
+            for (let row = 0; row <= N - K; row++) {
+                let combo = [];
+                let isWin = true;
+                for (let k = 0; k < K; k++) {
+                    const index = (row + k) * N + col;//sor index változik, oszlop fix
+                    if (gameState[index] !== player) {
+                        isWin = false;
+                        break;
+                    }
+                    combo.push(index);
+                }
+                if (isWin) return { winner: player, combo};
+            }
         }
+
+        //4. atlo kombinaciok vizsgalata (Jobb felülről le)
+        for (let row = 0; row <= N - K; row)
     }
-
-    if (roundWon) {
-        gameActive = false; // leallitjaajatekot
-        statusDisplay.innerHTML = winningMessage(currentPlayer);
-
-        //kiemelt a nyero vonalat
-        winningCombo.forEach(index => {
-            cells[index].classList.add('winning-cell');
-        });
-
-        //megjeleniti a modalt (popup) a gyoztes uzenettel
-        showModal(winningMessage(currentPlayer));
-        return;
-    }
-
-    //elenorzi a dontetlent
-    let roundDraw = !gameState.includes('');
-    if (roundDraw) {
-        gameActive = false;
-        statusDisplay.innerHTML = drawMessage;
-        //megjeleniti a modalt a dontetlen uzenettel
-        showModal(drawMessage);
-        return;
-    }
-
-    //valt a kovetkezo jatekosra 
-    handlePlayerChange();
 }
+
+
 
 //Vált a következő játékosra x o
 function handlePlayerChange() {
